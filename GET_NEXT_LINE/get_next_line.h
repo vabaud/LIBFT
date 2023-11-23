@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 01:12:03 by vabaud            #+#    #+#             */
-/*   Updated: 2023/11/22 13:14:15 by vabaud           ###   ########.fr       */
+/*   Updated: 2023/11/23 05:22:48 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+# define BUFFER_SIZE 5
+
 char	*get_next_line(int fd);
+size_t	ft_strlcpy(char *dest, const char *src, size_t size);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *s);
 
 #endif
