@@ -6,25 +6,45 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 01:14:45 by vabaud            #+#    #+#             */
-/*   Updated: 2023/11/23 06:27:25 by vabaud           ###   ########.fr       */
+/*   Updated: 2023/11/24 02:13:29 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char    *deltmp(char *tmp)
+{
+    char    *nstr;
+    int     i;
+    int     j;
+
+    j = 0;
+    i = ft_strchr(tmp, '\n') - tmp + 1;
+    nstr = (char *)malloc(sizeof(char) * 1000);
+    if (!nstr)
+        return (NULL);
+    while (tmp[i] != '\0')
+    {
+        nstr[j] = tmp[i];
+        i++;
+        j++;
+    }
+    return nstr;
+}
 
 char *get_next_line(int fd)
 {
     char *buffer;
     char *str;
     static char *tmp;
-    size_t byte_read;
+    size_t byte_read = 1;
     
-    byte_read = 1;
     buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE);
     if (!buffer)
         return NULL;
-    str = (char *)malloc(sizeof(char) * 10000);
-    tmp = (char *)malloc(sizeof(char) * 10000);
+    str = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+    if (!tmp)
+        tmp = (char *)malloc(sizeof(char) * BUFFER_SIZE);
     if (!str || !tmp)
         return NULL;
     while (byte_read > 0)
@@ -33,12 +53,12 @@ char *get_next_line(int fd)
         tmp = ft_strjoin(tmp, buffer);
         if (ft_strchr(tmp, '\n') != NULL)
         {
-            ft_strlcpy(str, tmp, ft_strchr(tmp, '\n') - tmp + 2);
+            ft_strlcpy(str, tmp, ft_strchr(tmp, '\n') - tmp + 1);
+            tmp = deltmp(tmp);
             return str;
         }
-        printf("%ld ", byte_read);
     }
-    return NULL;
+    return (NULL);
 }
 
 int main(void)
@@ -58,7 +78,7 @@ int main(void)
     line = get_next_line(fd);
     if (line != NULL)
     {
-        printf("Ligne lue : %s", line);
+        printf("Ligne lue : %s\n", line);
         free(line);
     }
 
@@ -66,10 +86,32 @@ int main(void)
     line = get_next_line(fd);
     if (line != NULL)
     {
-        printf("Ligne lue : %s", line);
+        printf("Ligne lue : %s\n", line);
         free(line);
     }
 
+    // Troisieme ligne
+    line = get_next_line(fd);
+    if (line != NULL)
+    {
+        printf("Ligne lue : %s\n", line);
+        free(line);
+    }
+
+    line = get_next_line(fd);
+    if (line != NULL)
+    {
+        printf("Ligne lue : %s\n", line);
+        free(line);
+    }
+
+    line = get_next_line(fd);
+    if (line != NULL)
+    {
+        printf("Ligne lue : %s\n", line);
+        free(line);
+    }
+    
     close(fd);
 
     return 0;
